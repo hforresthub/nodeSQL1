@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const fs = require('fs')
 
 const con = mysql.createConnection({
 	host: "localhost",
@@ -7,6 +8,9 @@ const con = mysql.createConnection({
 	password: "",
 	database: "mydb"
 })
+
+const filename = "data.json"
+let tableDataJSON = ''
 
 con.connect((err) => {
 	if (err) {
@@ -22,8 +26,17 @@ con.connect((err) => {
 			throw err
 		}
 		console.log("Result: " + JSON.stringify(res))
+		tableDataJSON = JSON.stringify(res)
+		fs.writeFile(filename, tableDataJSON, { flag: 'w+'}, err => {
+			if (err) {
+				console.error(err)
+				return
+			}
+			console.log('worked!');
+		})
 	})
 })
+
 
 setTimeout(() => {
 	con.end()
