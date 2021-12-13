@@ -17,9 +17,15 @@ con.connect((err) => {
 		throw err
 	}
 	console.log("Connected!")
+	const values = [
+		['Jo', '1231 Fake street'],
+		['No', '2123 Fake street'],
+		['Ao', '1233 Fake street'],
+		['To', '1243 Fake street']
+	]
 	let sql = "CREATE DATABASE mydb"
 	sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"
-	sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"
+	sql = "INSERT INTO customers (name, address) VALUES ?"
 	sql = "SELECT * FROM customers"
 	con.query(sql, (err, res, fields) => {
 		if (err) {
