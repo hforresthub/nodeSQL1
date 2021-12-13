@@ -4,7 +4,8 @@ const con = mysql.createConnection({
 	host: "localhost",
 	port: "3306",
 	user: "root",
-	password: ""
+	password: "",
+	database: "mydb"
 })
 
 con.connect((err) => {
@@ -12,11 +13,18 @@ con.connect((err) => {
 		throw err
 	}
 	console.log("Connected!")
-	const sql = "CREATE DATABASE mydb"
-	con.query(sql, (err, res) => {
+	let sql = "CREATE DATABASE mydb"
+	sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"
+	sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"
+	sql = "SELECT * FROM customers"
+	con.query(sql, (err, res, fields) => {
 		if (err) {
 			throw err
 		}
-		console.log("Result: " + res)
+		console.log("Result: " + JSON.stringify(res))
 	})
 })
+
+setTimeout(() => {
+	con.end()
+}, 2000)
