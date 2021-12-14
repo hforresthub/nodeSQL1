@@ -34,13 +34,14 @@ con.connect((err) => {
 	// sql = "SELECT * FROM customers WHERE address LIKE '%Fake%'"
 	// sql = "SELECT * FROM customers WHERE address = " + mysql.escape(adr)
 	// sql = "SELECT * FROM customers WHERE address = ? OR address = ? OR name = ?"
-	sql = "SELECT name FROM customers WHERE address = ? OR address = ? OR name = ?"
+	sql = "SELECT name, address FROM customers WHERE address = ? OR address = ? OR name = ?"
 	con.query(sql, [adr, adr2, name], (err, res, fields) => {
 		if (err) {
 			throw err
 		}
-		console.log("Result: " + JSON.stringify(res))
-		tableDataJSON = JSON.stringify(res)
+		tableDataJSON = JSON.stringify(res[0].name)
+		console.log(`Result: ${tableDataJSON}`)
+		console.log(`Fields: `, fields[1].name)
 		fs.writeFile(filename, tableDataJSON, { flag: 'w+'}, err => {
 			if (err) {
 				console.error(err)
