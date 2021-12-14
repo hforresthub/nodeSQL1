@@ -23,11 +23,19 @@ con.connect((err) => {
 		['Ao', '1233 Fake street'],
 		['To', '1243 Fake street']
 	]
+	const adr = '1231 Fake street'
+	const adr2 = '1233 Fake street'
+	const name = 'To'
 	let sql = "CREATE DATABASE mydb"
-	sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"
-	sql = "INSERT INTO customers (name, address) VALUES ?"
-	sql = "SELECT * FROM customers"
-	con.query(sql, (err, res, fields) => {
+	// sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"
+	// sql = "INSERT INTO customers (name, address) VALUES ?"
+	// sql = "SELECT * FROM customers"
+	// sql = "SELECT * FROM customers WHERE address = '1231 Fake street'"
+	// sql = "SELECT * FROM customers WHERE address LIKE '%Fake%'"
+	// sql = "SELECT * FROM customers WHERE address = " + mysql.escape(adr)
+	// sql = "SELECT * FROM customers WHERE address = ? OR address = ? OR name = ?"
+	sql = "SELECT name FROM customers WHERE address = ? OR address = ? OR name = ?"
+	con.query(sql, [adr, adr2, name], (err, res, fields) => {
 		if (err) {
 			throw err
 		}
